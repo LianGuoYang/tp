@@ -1,6 +1,15 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
 import org.junit.jupiter.api.Test;
+
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -8,16 +17,6 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
 import seedu.address.testutil.PersonBuilder;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-
-import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 
 class RemarkCommandTest {
 
@@ -48,15 +47,14 @@ class RemarkCommandTest {
     @Test
     void execute_illegalArgumentForRemark_success() {
         Person firstPerson = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
-        assertThrows(IllegalArgumentException.class,
-                ()-> new PersonBuilder(firstPerson).withRemark("").build()
+        assertThrows(IllegalArgumentException.class, ()-> new PersonBuilder(firstPerson).withRemark("").build()
         );
     }
 
     @Test
     void execute_indexOutOfBounds_success() {
-        assertThrows(IndexOutOfBoundsException.class,
-                ()-> model.getFilteredPersonList().get(model.getFilteredPersonList().size() + 1));
+        assertThrows(IndexOutOfBoundsException.class, ()->
+                model.getFilteredPersonList().get(model.getFilteredPersonList().size() + 1));
     }
 
     @Test
